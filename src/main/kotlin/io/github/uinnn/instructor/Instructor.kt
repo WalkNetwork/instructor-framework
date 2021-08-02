@@ -32,7 +32,6 @@ class Instructor(name: String) : Command(name.trim()), Instructable {
   }
 
   override fun execute(sender: CommandSender, name: String, args: Array<out String>): Boolean {
-    if (!this::performer.isInitialized) return false
     if (!senderType.validate(sender)) {
       sender.sendMessage(senderType.message)
       return false
@@ -49,6 +48,7 @@ class Instructor(name: String) : Command(name.trim()), Instructable {
       sender.sendMessage(permissionMessage)
       return false
     }
+    if (!this::performer.isInitialized) return false
     return attemptPerform(sender, name, args).isSuccess
   }
 }
