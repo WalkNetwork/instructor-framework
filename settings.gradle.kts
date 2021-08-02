@@ -1,0 +1,2 @@
+rootProject.name = "instructor-framework"
+
