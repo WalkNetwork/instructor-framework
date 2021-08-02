@@ -42,6 +42,11 @@ interface Argumentable {
 inline val Argumentable.size get() = arguments.size
 
 /**
+ * Returns the last index of all arguments of this argumentable.
+ */
+inline val Argumentable.lastIndex get() = arguments.lastIndex
+
+/**
  * Returns if this argumentable contains a argument
  * at the specified index.
  */
@@ -218,7 +223,7 @@ fun Argumentable.gamemode(
  * Gets a optional array argument at the specified index
  * or null if the argument not exists.
  */
-fun Argumentable.optionalArray(index: Int, finalIndex: Int = size): Array<out String>? {
+fun Argumentable.optionalArray(index: Int, finalIndex: Int = lastIndex): Array<out String>? {
   val array = runCatching { arguments.sliceArray(index..finalIndex) }.getOrNull()
   return when {
     array.isNullOrEmpty() -> null
@@ -232,7 +237,7 @@ fun Argumentable.optionalArray(index: Int, finalIndex: Int = size): Array<out St
  */
 fun Argumentable.array(
   index: Int,
-  finalIndex: Int = size,
+  finalIndex: Int = lastIndex,
   message: String = "§cArray não reconhecida no index $index..$finalIndex"
 ): Array<out String> = optionalArray(index, finalIndex) ?: error(message)
 
@@ -240,7 +245,7 @@ fun Argumentable.array(
  * Gets a optional list argument at the specified index
  * or null if the argument not exists.
  */
-fun Argumentable.optionalList(index: Int, finalIndex: Int = size): List<String>? {
+fun Argumentable.optionalList(index: Int, finalIndex: Int = lastIndex): List<String>? {
   val list = runCatching { arguments.slice(index..finalIndex) }.getOrNull()
   return when {
     list.isNullOrEmpty() -> null
@@ -254,7 +259,7 @@ fun Argumentable.optionalList(index: Int, finalIndex: Int = size): List<String>?
  */
 fun Argumentable.list(
   index: Int,
-  finalIndex: Int = size,
+  finalIndex: Int = lastIndex,
   message: String = "§cLista não reconhecida no index $index..$finalIndex"
 ): List<String> = optionalList(index, finalIndex) ?: error(message)
 
@@ -273,7 +278,7 @@ fun Argumentable.validateNot(valide: Boolean, message: String = "§cValidação 
 /**
  * Joins all arguments of this argumentable to a string.
  */
-fun Argumentable.joining(): String = arguments.joinToString(" ") { " " }
+fun Argumentable.join(): String = arguments.joinToString(" ")
 
 /**
  * Returns a [List] from the arguments of this argumentable.
