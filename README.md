@@ -90,7 +90,7 @@ instructorWith(name = "mycommand", aliases = "mycmd", "cmd") {
   val double = double(0) // gets a double number in the argument 0 (/mycommand 5)
   // gets a optional double number in the argument 1 (/mycommand 5 2)
   // if the argument is not a double or is not specified, we set the variable as 0
-  val optional = optionalDouble(1) ?: 0
+  val optional = optionalDouble(1) or 0
 }
 ```
 The argumentable interface is very extensible and has a lot of predefined arguments converters!
