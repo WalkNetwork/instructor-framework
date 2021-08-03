@@ -122,6 +122,7 @@ The argumentable interface is very extensible and has a lot of predefined argume
 * `lowercase` maps all arguments to lowercase.
 * `uppercase` maps all arguments to uppercase.
 * `or` returns the optional argument if present or another default value.
+* `error` will throw a `InstructorException` thats will send a message to the sender and stoping the execution of the command.
 
 ### Argumentable examples:
 Some examples using arguments:
