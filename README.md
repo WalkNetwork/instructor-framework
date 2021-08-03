@@ -121,6 +121,7 @@ The argumentable interface is very extensible and has a lot of predefined argume
 * `map` maps all arguments to the specified transformer.
 * `lowercase` maps all arguments to lowercase.
 * `uppercase` maps all arguments to uppercase.
+* `or` returns the optional argument if present or another default value.
 
 ### Argumentable examples:
 Some examples using arguments:
@@ -131,7 +132,7 @@ instructor(name = "fly") {
   permission = "admin"
   performs {
     // gets the argument 0 as online player or yourself.
-    val target = optionalPlayer(0) ?: player
+    val target = optionalPlayer(0) or player
     target.allowFlight = true
     send("You activated the fly of the player: ${target.name}")
   }
@@ -155,7 +156,7 @@ instructorWith(name = "list") {
 
 ```kt
 instructorWith(name = "up") {
-  val target = optionalOfflinePlayer(0) ?: player
+  val target = optionalOfflinePlayer(0) or player
   // if the target is not in the data manager, the command will be stopped.
   val data = DataManager.get(target.uniqueId) ?: error("The target is not in the data manager.")
   // if the level of the target in data is not greater than 5, the command will be stopped.
