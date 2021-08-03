@@ -116,8 +116,8 @@ The argumentable interface is very extensible and has a lot of predefined argume
 * `asIterable` returns all arguments as iterable.
 * `asSequence` returns all arguments as sequence.
 * `asFluent` returns all arguments as Fluent Iterable.
-* `validate` verify if a specified boolean is true, if false, will throw a error.
-* `validateNot` verify if a specified boolean is false, if true, will throw a error.
+* `validate` verify if a specified boolean is true, if false, will throw a `error`.
+* `validateNot` verify if a specified boolean is false, if true, will throw a `error`.
 * `map` maps all arguments to the specified transformer.
 * `lowercase` maps all arguments to lowercase.
 * `uppercase` maps all arguments to uppercase.
