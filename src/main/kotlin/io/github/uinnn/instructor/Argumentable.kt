@@ -267,13 +267,13 @@ fun Argumentable.list(
  * Validates thats the [valide] parameter is true, if false, a [error] will be throw.
  */
 fun Argumentable.validate(valide: Boolean, message: String = "§cValidação mal-sucedida."): Boolean =
-  if (!valide) true else error(message)
+  if (valide) true else error(message)
 
 /**
  * Validates thats the [valide] parameter is false, if true, a [error] will be throw.
  */
 fun Argumentable.validateNot(valide: Boolean, message: String = "§cValidação mal-sucedida."): Boolean =
-  if (valide) true else error(message)
+  if (!valide) true else error(message)
 
 /**
  * Joins all arguments of this argumentable to a string.
