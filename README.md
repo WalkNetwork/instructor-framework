@@ -2,10 +2,10 @@
   <img align="center" src="https://img.shields.io/static/v1?style=for-the-badge&label=author&message=uinnn&color=informational"/>
 </a>
 <a href="https://github.com/uinnn/instructor-framework">
-  <img align="center" src="https://img.shields.io/static/v1?style=for-the-badge&label=version&message=1.0.3v&color=ff69b4"/>
+  <img align="center" src="https://img.shields.io/github/v/release/uinnn/instructor-framework?color=yellow&label=instructor-framework&style=for-the-badge"/>
 </a>
 <a href="https://github.com/uinnn/instructor-framework">
-  <img align="center" src="https://img.shields.io/static/v1?style=for-the-badge&label=maven-central&message=1.0.3&color=orange"/>
+  <img align="center" src="https://img.shields.io/github/v/release/uinnn/instructor-framework?color=ff69b4&label=maven-central&style=for-the-badge"/>
 </a>
 <a href="https://github.com/uinnn/instructor-framework">
   <img align="center" src="https://img.shields.io/static/v1?style=for-the-badge&label=license&message=MIT License&color=success"/>
@@ -90,7 +90,7 @@ instructorWith(name = "mycommand", aliases = "mycmd", "cmd") {
   val double = double(0) // gets a double number in the argument 0 (/mycommand 5)
   // gets a optional double number in the argument 1 (/mycommand 5 2)
   // if the argument is not a double or is not specified, we set the variable as 0
-  val optional = optionalDouble(1) ?: 0
+  val optional = optionalDouble(1) or 0
 }
 ```
 The argumentable interface is very extensible and has a lot of predefined arguments converters!
@@ -116,11 +116,13 @@ The argumentable interface is very extensible and has a lot of predefined argume
 * `asIterable` returns all arguments as iterable.
 * `asSequence` returns all arguments as sequence.
 * `asFluent` returns all arguments as Fluent Iterable.
-* `validate` verify if a specified boolean is true, if false, will throw a error.
-* `validateNot` verify if a specified boolean is false, if true, will throw a error.
+* `validate` verify if a specified boolean is true, if false, will throw a `error`.
+* `validateNot` verify if a specified boolean is false, if true, will throw a `error`.
 * `map` maps all arguments to the specified transformer.
 * `lowercase` maps all arguments to lowercase.
 * `uppercase` maps all arguments to uppercase.
+* `or` returns the optional argument if present or another default value.
+* `error` will throw a `InstructorException` thats will send a message to the sender and stoping the execution of the command.
 
 ### Argumentable examples:
 Some examples using arguments:
@@ -131,7 +133,7 @@ instructor(name = "fly") {
   permission = "admin"
   performs {
     // gets the argument 0 as online player or yourself.
-    val target = optionalPlayer(0) ?: player
+    val target = optionalPlayer(0) or player
     target.allowFlight = true
     send("You activated the fly of the player: ${target.name}")
   }
@@ -155,7 +157,7 @@ instructorWith(name = "list") {
 
 ```kt
 instructorWith(name = "up") {
-  val target = optionalOfflinePlayer(0) ?: player
+  val target = optionalOfflinePlayer(0) or player
   // if the target is not in the data manager, the command will be stopped.
   val data = DataManager.get(target.uniqueId) ?: error("The target is not in the data manager.")
   // if the level of the target in data is not greater than 5, the command will be stopped.
