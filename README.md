@@ -109,13 +109,22 @@ The argumentable interface is very extensible and has a lot of predefined argume
 * `optionalPlayer` and `player` argument.
 * `optionalOfflinePlayer` and `offlineplayer` argument. 
 * `optionalGamemode` and `gamemode` argument. 
+* `optionalEnchantment` and `enchantment` argument. 
+* `optionalWorld` and `world` argument. 
+* `optionalMaterial` and `material` argument. 
+* `optionalMaterialData` and `materialData` argument. 
+* `optionalLocation` and `location` argument. 
+* `optionalBlock` and `block` argument. 
 
 ### Others useful functions:
 * `join` joins all arguments to a string.
+* `joinInRange` joins all arguments in a range to a string.
+* `limit` limits all arguments in a size and returns a `FluentIterable`.
+* `zipped` zips all adjacents arguments in list of pairs.
 * `asList` returns all arguments as list.
 * `asIterable` returns all arguments as iterable.
 * `asSequence` returns all arguments as sequence.
-* `asFluent` returns all arguments as Fluent Iterable.
+* `asFluent` returns all arguments as `FluentIterable`.
 * `validate` verify if a specified boolean is true, if false, will throw a `error`.
 * `validateNot` verify if a specified boolean is false, if true, will throw a `error`.
 * `map` maps all arguments to the specified transformer.
