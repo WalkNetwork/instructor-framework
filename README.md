@@ -218,6 +218,23 @@ instructorWith(name = "new") {
   val data = materialData(2)
   // a required enchantment in argument 3, can be by name or id
   val enchantment = enchantment(3)
+
+  // a required location in argument 4, this will be performed like as multi argument, for example:
+  // /new 
+}
+```
+
+```kt
+instructorWith(name = "location") {
+  // a required location in argument 0, this will be performed like as multi argument, for example:
+  // /location world 0.5 100 50.12
+  // with yaw and pitch:
+  // /location world 0.5 100 50.12 40.4 3
+  // is not recommended use this with another arguments.
+  val location = location(0)
+  
+  // the block is the same thing than the location.
+  val block = block(0)
 }
 ```
 
