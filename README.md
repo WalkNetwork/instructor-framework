@@ -196,7 +196,31 @@ instructorWith(name = "as") {
   // will transforms all arguments to fluent iterable,
   // will limit the arguments in 5, and skips 2 arguments.
   val fluent = asFluent().limit(5).skip(2)
+  // or
+  val limited = limit(5).skip(2)
 }
 ```
+
+```kt
+instructorWith(name = "joinInRange") {
+  will joins the arguments 0, 1, 2 and 3 in a string.
+  val joined = joinInRange(0, 3)
+}
+```
+
+```kt
+instructorWith(name = "new") {
+  // a optional world in argument 0 or the sender's world
+  val world = optionalWorld(0) or player.world
+  // a required material in argument 1, can be by name, like 'grass' (will be uppercased), or by id, like '2' 
+  val material = material(1)
+  // a required material data in argument 2, same to the material, but this can do: 'stone:2', or '1:2'
+  val data = materialData(2)
+  // a required enchantment in argument 3, can be by name or id
+  val enchantment = enchantment(3)
+}
+```
+
+
 
 
