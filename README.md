@@ -218,9 +218,6 @@ instructorWith(name = "new") {
   val data = materialData(2)
   // a required enchantment in argument 3, can be by name or id
   val enchantment = enchantment(3)
-
-  // a required location in argument 4, this will be performed like as multi argument, for example:
-  // /new 
 }
 ```
 
@@ -235,6 +232,43 @@ instructorWith(name = "location") {
   
   // the block is the same thing than the location.
   val block = block(0)
+}
+```
+
+## Setup for development
+The `interface-framework` is in the central maven repository. Thus making things very easy!
+
+### Gradle Kotlin DSL
+```gradle
+implementation("io.github.uinnn:instructor-framework:1.1")
+```
+
+### Gradle
+```gradle
+implementation 'io.github.uinnn:instructor-framework:1.1'
+```
+
+### Maven
+```xml
+<dependency>
+  <groupId>io.github.uinnn</groupId>
+  <artifactId>instructor-framework</artifactId>
+  <version>1.1</version>
+</dependency>
+```
+
+### Final notes
+The `instructor-framework` **NOT** contains the kotlin runtime needed to run this framework,
+so you should implement them directly in your project.
+To make your life easier, here is all the implementation of the libraries needed to run the framework:
+
+```gradle
+plugins {
+  kotlin("jvm") version "1.5.21"
+}
+
+dependencies {
+  implementation(kotlin("stdlib-jdk8")) // the kotlin std lib with jdk8
 }
 ```
 
