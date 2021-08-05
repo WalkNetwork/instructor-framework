@@ -203,7 +203,7 @@ instructorWith(name = "as") {
 
 ```kt
 instructorWith(name = "joinInRange") {
-  will joins the arguments 0, 1, 2 and 3 in a string.
+  // will joins the arguments 0, 1, 2 and 3 in a string.
   val joined = joinInRange(0, 3)
 }
 ```
