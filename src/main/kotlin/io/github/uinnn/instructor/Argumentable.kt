@@ -1,10 +1,11 @@
 package io.github.uinnn.instructor
 
 import com.google.common.collect.FluentIterable
-import org.bukkit.Bukkit
-import org.bukkit.GameMode
-import org.bukkit.OfflinePlayer
+import org.bukkit.*
+import org.bukkit.block.Block
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
+import org.bukkit.material.MaterialData
 
 /**
  * A argumentable object thats holds a [Array] of [String]
@@ -220,6 +221,133 @@ fun Argumentable.gamemode(
 ): GameMode = optionalGamemode(index) ?: error(message)
 
 /**
+ * Gets a optional enchantment argument at the specified index
+ * or null if the argument not exists.
+ */
+fun Argumentable.optionalEnchantment(index: Int): Enchantment? {
+  val string = optionalString(index) ?: return null
+  return runCatching {
+    Enchantment.getByName(string.uppercase())
+  }.recoverCatching {
+    Enchantment.getById(string.toInt())
+  }.getOrNull()
+}
+
+/**
+ * Gets a enchantment argument at the specified index or throws
+ * a [InstructorError] if the argument not exists.
+ */
+fun Argumentable.enchantment(
+  index: Int,
+  message: String = "§cEncantamento não reconhecido no index $index"
+): Enchantment = optionalEnchantment(index) ?: error(message)
+
+/**
+ * Gets a optional world argument at the specified index
+ * or null if the argument not exists.
+ */
+fun Argumentable.optionalWorld(index: Int): World? {
+  val string = optionalString(index) ?: return null
+  return Bukkit.getWorld(string)
+}
+
+/**
+ * Gets a world argument at the specified index or throws
+ * a [InstructorError] if the argument not exists.
+ */
+fun Argumentable.world(
+  index: Int,
+  message: String = "§cMundo não reconhecido no index $index"
+): World = optionalWorld(index) ?: error(message)
+
+/**
+ * Internal api to get a material by string.
+ */
+internal fun getMaterialOrNull(string: String): Material? {
+  return runCatching {
+    Material.valueOf(string.uppercase())
+  }.recoverCatching {
+    Material.getMaterial(string.toInt())
+  }.getOrNull()
+}
+
+/**
+ * Gets a optional material argument at the specified index
+ * or null if the argument not exists.
+ */
+fun Argumentable.optionalMaterial(index: Int): Material? {
+  val string = optionalString(index) ?: return null
+  return getMaterialOrNull(string)
+}
+
+/**
+ * Gets a material argument at the specified index or throws
+ * a [InstructorError] if the argument not exists.
+ */
+fun Argumentable.material(
+  index: Int,
+  message: String = "§cMaterial não reconhecido no index $index"
+): Material = optionalMaterial(index) ?: error(message)
+
+/**
+ * Gets a optional material data argument at the specified index
+ * or null if the argument not exists.
+ */
+fun Argumentable.optionalMaterialData(index: Int): MaterialData? {
+  val string = optionalString(index) ?: return null
+  val split = string.split(':', limit = 2)
+  val material = getMaterialOrNull(split[0]) ?: return null
+  return MaterialData(material, split[1].toByte())
+}
+
+/**
+ * Gets a material data argument at the specified index or throws
+ * a [InstructorError] if the argument not exists.
+ */
+fun Argumentable.materialData(
+  index: Int,
+  message: String = "§cMaterial data não reconhecido no index $index"
+): MaterialData = optionalMaterialData(index) ?: error(message)
+
+/**
+ * Gets a optional location argument at the specified index
+ * or null if the argument not exists.
+ */
+fun Argumentable.optionalLocation(index: Int): Location? {
+  val world = optionalWorld(index) ?: return null
+  val x = optionalDouble(index + 1) ?: return null
+  val y = optionalDouble(index + 2) ?: return null
+  val z = optionalDouble(index + 3) ?: return null
+  return Location(world, x, y, z, optionalFloat(index + 4) ?: 0F, optionalFloat(index + 5) ?: 0F)
+}
+
+/**
+ * Gets a location argument at the specified index or throws
+ * a [InstructorError] if the argument not exists.
+ */
+fun Argumentable.location(
+  index: Int,
+  message: String = "§cLocalização não reconhecida no index $index"
+): Location = optionalLocation(index) ?: error(message)
+
+/**
+ * Gets a optional block argument at the specified index
+ * or null if the argument not exists.
+ */
+fun Argumentable.optionalBlock(index: Int): Block? {
+  return optionalLocation(index)?.block
+}
+
+/**
+ * Gets a block argument at the specified index or throws
+ * a [InstructorError] if the argument not exists.
+ */
+fun Argumentable.block(
+  index: Int,
+  message: String = "§cBloco não reconhecida no index $index"
+): Block = optionalBlock(index) ?: error(message)
+
+/**
  * Gets a optional array argument at the specified index
  * or null if the argument not exists.
  */
@@ -281,6 +409,14 @@ fun Argumentable.validateNot(valide: Boolean, message: String = "§cValidação 
 fun Argumentable.join(): String = arguments.joinToString(" ")
 
 /**
+ * Joins all arguments in range of this argumentable to a string.
+ */
+fun Argumentable.joinInRange(index: Int, finalIndex: Int = lastIndex): String {
+  val list = optionalList(index, finalIndex) ?: return ""
+  return list.joinToString(" ")
+}
+
+/**
  * Returns a [List] from the arguments of this argumentable.
  */
 fun Argumentable.asList(): List<String> = arguments.asList()
@@ -299,6 +435,17 @@ fun Argumentable.asIterable(): Iterable<String> = arguments.asIterable()
  * Returns a [FluentIterable] from the arguments of this argumentable.
  */
 fun Argumentable.asFluent(): FluentIterable<String> = FluentIterable.from(asIterable())
+
+/**
+ * Returns a [FluentIterable] limited by the size from the arguments of this argumentable.
+ */
+fun Argumentable.limit(size: Int): FluentIterable<String> = asFluent().limit(size)
+
+/**
+ * Returns all arguments zipped to another next argument.
+ * @see zipWithNext
+ */
+fun Argumentable.zipped() = asList().zipWithNext()
 
 /**
  * Maps all arguments of this argumentable to a list of mapped [T].

@@ -14,7 +14,7 @@ val commandMap: SimpleCommandMap by lazy {
 }
 
 /**
- * Returns a only known commands field.
+ * Returns all known commands by the server.
  */
 val knownCommands: MutableMap<*, *> by lazy {
   SimpleCommandMap::class.java.getDeclaredField("knownCommands").apply {
