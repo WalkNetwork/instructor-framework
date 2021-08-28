@@ -109,13 +109,22 @@ The argumentable interface is very extensible and has a lot of predefined argume
 * `optionalPlayer` and `player` argument.
 * `optionalOfflinePlayer` and `offlineplayer` argument. 
 * `optionalGamemode` and `gamemode` argument. 
+* `optionalEnchantment` and `enchantment` argument. 
+* `optionalWorld` and `world` argument. 
+* `optionalMaterial` and `material` argument. 
+* `optionalMaterialData` and `materialData` argument. 
+* `optionalLocation` and `location` argument. 
+* `optionalBlock` and `block` argument. 
 
 ### Others useful functions:
 * `join` joins all arguments to a string.
+* `joinInRange` joins all arguments in a range to a string.
+* `limit` limits all arguments in a size and returns a `FluentIterable`.
+* `zipped` zips all adjacents arguments in list of pairs.
 * `asList` returns all arguments as list.
 * `asIterable` returns all arguments as iterable.
 * `asSequence` returns all arguments as sequence.
-* `asFluent` returns all arguments as Fluent Iterable.
+* `asFluent` returns all arguments as `FluentIterable`.
 * `validate` verify if a specified boolean is true, if false, will throw a `error`.
 * `validateNot` verify if a specified boolean is false, if true, will throw a `error`.
 * `map` maps all arguments to the specified transformer.
@@ -187,7 +196,82 @@ instructorWith(name = "as") {
   // will transforms all arguments to fluent iterable,
   // will limit the arguments in 5, and skips 2 arguments.
   val fluent = asFluent().limit(5).skip(2)
+  // or
+  val limited = limit(5).skip(2)
 }
 ```
+
+```kt
+instructorWith(name = "joinInRange") {
+  // will joins the arguments 0, 1, 2 and 3 in a string.
+  val joined = joinInRange(0, 3)
+}
+```
+
+```kt
+instructorWith(name = "new") {
+  // a optional world in argument 0 or the sender's world
+  val world = optionalWorld(0) or player.world
+  // a required material in argument 1, can be by name, like 'grass' (will be uppercased), or by id, like '2' 
+  val material = material(1)
+  // a required material data in argument 2, same to the material, but this can do: 'stone:2', or '1:2'
+  val data = materialData(2)
+  // a required enchantment in argument 3, can be by name or id
+  val enchantment = enchantment(3)
+}
+```
+
+```kt
+instructorWith(name = "location") {
+  // a required location in argument 0, this will be performed like as multi argument, for example:
+  // /location world 0.5 100 50.12
+  // with yaw and pitch:
+  // /location world 0.5 100 50.12 40.4 3
+  // is not recommended use this with another arguments.
+  val location = location(0)
+  
+  // the block is the same thing than the location.
+  val block = block(0)
+}
+```
+
+## Setup for development
+The `interface-framework` is in the central maven repository. Thus making things very easy!
+
+### Gradle Kotlin DSL
+```gradle
+implementation("io.github.uinnn:instructor-framework:1.1")
+```
+
+### Gradle
+```gradle
+implementation 'io.github.uinnn:instructor-framework:1.1'
+```
+
+### Maven
+```xml
+<dependency>
+  <groupId>io.github.uinnn</groupId>
+  <artifactId>instructor-framework</artifactId>
+  <version>1.1</version>
+</dependency>
+```
+
+### Final notes
+The `instructor-framework` **NOT** contains the kotlin runtime needed to run this framework,
+so you should implement them directly in your project.
+To make your life easier, here is all the implementation of the libraries needed to run the framework:
+
+```gradle
+plugins {
+  kotlin("jvm") version "1.5.21"
+}
+
+dependencies {
+  implementation(kotlin("stdlib-jdk8")) // the kotlin std lib with jdk8
+}
+```
+
+
 
 
