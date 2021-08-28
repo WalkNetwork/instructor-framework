@@ -27,7 +27,7 @@ With just one simple function, you already have several very useful features tha
 To create a instructor is very easy, you just call the `instructor()` function:
 
 ```kt
-instructor(name = "mycommand", aliases = "mycmd", "cmd") {
+command(name = "mycommand", aliases = "mycmd", "cmd") {
   // adds a performer action to execute:
   performs {
     // sends a message to the console or player depending of the sender.
@@ -38,7 +38,7 @@ instructor(name = "mycommand", aliases = "mycmd", "cmd") {
 
 Well, this instructor thats we have created is very simple, this just performs a action, so we can shorten even more!
 ```kt
-instructorWith(name = "mycommand", aliases = "mycmd", "cmd") {
+commandWith(name = "mycommand", aliases = "mycmd", "cmd") {
   // in this scope, everything will be performed.
   send("Hello!")
 }
@@ -46,7 +46,7 @@ instructorWith(name = "mycommand", aliases = "mycmd", "cmd") {
 
 You can modify the permission, permission message and others:
 ```kt
-instructor(name = "mycommand", aliases = "mycmd", "cmd") {
+command(name = "mycommand", aliases = "mycmd", "cmd") {
   senderType = SenderType.PLAYER // only players can execute.
   permission = "admin" // require admin permission to execute.
   permissionMessage = "§cWithout permission!" // sets the permission message.
@@ -59,24 +59,24 @@ instructor(name = "mycommand", aliases = "mycmd", "cmd") {
 ### Adding alternates instructors (sub commands)
 To add alternates instructors, just add a new `instructor()` or `instructorWith()` function inside of a `instructor()`:
 ```kt
-instructor(name = "mycommand", aliases = "mycmd", "cmd") {
+command(name = "mycommand", aliases = "mycmd", "cmd") {
   performs {
     send("Hello!")
   }
   
   // will be executable with: /mycommand sub
-  instructorWith("sub") {
+  with("sub") {
     send("I am a sub command!")
   }
   
   // will be executable with: /mycommand another
-  instructor("another") {
+  sub("another") {
     performs {
       send("Please, use: /mycommand another sub")
     }
     
     // will be executable with: /mycommand another sub
-    instructorWith("sub") {
+    with("sub") {
       send("I am a sub command of another sub command!")
     }
   }
@@ -86,7 +86,7 @@ instructor(name = "mycommand", aliases = "mycmd", "cmd") {
 ### Argumentable
 Argumentable is a interface thats holds the arguments thats the command sender gived! This contains a lot of useful functions:
 ```kt
-instructorWith(name = "mycommand", aliases = "mycmd", "cmd") {
+commandWith(name = "mycommand", aliases = "mycmd", "cmd") {
   val double = double(0) // gets a double number in the argument 0 (/mycommand 5)
   // gets a optional double number in the argument 1 (/mycommand 5 2)
   // if the argument is not a double or is not specified, we set the variable as 0
@@ -131,13 +131,13 @@ The argumentable interface is very extensible and has a lot of predefined argume
 * `lowercase` maps all arguments to lowercase.
 * `uppercase` maps all arguments to uppercase.
 * `or` returns the optional argument if present or another default value.
-* `error` will throw a `InstructorException` thats will send a message to the sender and stoping the execution of the command.
+* `fail` will throw a `InstructorException` thats will send a message to the sender and stoping the execution of the command.
 
 ### Argumentable examples:
 Some examples using arguments:
 
 ```kt
-instructor(name = "fly") {
+command(name = "fly") {
   senderType = SenderType.PLAYER
   permission = "admin"
   performs {
@@ -150,14 +150,14 @@ instructor(name = "fly") {
 ```
 
 ```kt
-instructorWith(name = "example") {
+commandWith(name = "example") {
   val joined = join()
   send("Gived arguments: $joined")
 }
 ```
 
 ```kt
-instructorWith(name = "list") {
+commandWith(name = "list") {
   // will gets the argument 0, 1 and 2 as list.
   val rangeList = list(index = 0, finalIndex = 2)
   send("Gived arguments: $rangeList")
@@ -165,7 +165,7 @@ instructorWith(name = "list") {
 ```
 
 ```kt
-instructorWith(name = "up") {
+commandWith(name = "up") {
   val target = optionalOfflinePlayer(0) or player
   // if the target is not in the data manager, the command will be stopped.
   val data = DataManager.get(target.uniqueId) ?: error("The target is not in the data manager.")
@@ -176,13 +176,13 @@ instructorWith(name = "up") {
 ```
 
 ```kt
-instructorWith(name = "uppercase") {
+commandWith(name = "uppercase") {
   send("Gived arguments: ${uppercase()}")
 }
 ```
 
 ```kt
-instructorWith(name = "map") {
+commandWith(name = "map") {
   // maps all arguments to players.
   val mapped = map { argument -> Bukkit.getPlayer(argument) }
   mapped.forEach { player ->
@@ -192,7 +192,7 @@ instructorWith(name = "map") {
 ```
 
 ```kt
-instructorWith(name = "as") {
+commandWith(name = "as") {
   // will transforms all arguments to fluent iterable,
   // will limit the arguments in 5, and skips 2 arguments.
   val fluent = asFluent().limit(5).skip(2)
@@ -202,14 +202,14 @@ instructorWith(name = "as") {
 ```
 
 ```kt
-instructorWith(name = "joinInRange") {
+commandWith(name = "joinInRange") {
   // will joins the arguments 0, 1, 2 and 3 in a string.
   val joined = joinInRange(0, 3)
 }
 ```
 
 ```kt
-instructorWith(name = "new") {
+commandWith(name = "new") {
   // a optional world in argument 0 or the sender's world
   val world = optionalWorld(0) or player.world
   // a required material in argument 1, can be by name, like 'grass' (will be uppercased), or by id, like '2' 
@@ -222,7 +222,7 @@ instructorWith(name = "new") {
 ```
 
 ```kt
-instructorWith(name = "location") {
+commandWith(name = "location") {
   // a required location in argument 0, this will be performed like as multi argument, for example:
   // /location world 0.5 100 50.12
   // with yaw and pitch:
@@ -236,16 +236,16 @@ instructorWith(name = "location") {
 ```
 
 ## Setup for development
-The `interface-framework` is in the central maven repository. Thus making things very easy!
+The `instructor-framework` is in the central maven repository. Thus making things very easy!
 
 ### Gradle Kotlin DSL
 ```gradle
-implementation("io.github.uinnn:instructor-framework:1.1")
+implementation("io.github.uinnn:instructor-framework:1.2")
 ```
 
 ### Gradle
 ```gradle
-implementation 'io.github.uinnn:instructor-framework:1.1'
+implementation 'io.github.uinnn:instructor-framework:1.2'
 ```
 
 ### Maven
@@ -253,7 +253,7 @@ implementation 'io.github.uinnn:instructor-framework:1.1'
 <dependency>
   <groupId>io.github.uinnn</groupId>
   <artifactId>instructor-framework</artifactId>
-  <version>1.1</version>
+  <version>1.2</version>
 </dependency>
 ```
 
@@ -264,7 +264,7 @@ To make your life easier, here is all the implementation of the libraries needed
 
 ```gradle
 plugins {
-  kotlin("jvm") version "1.5.21"
+  kotlin("jvm") version "1.5.30"
 }
 
 dependencies {
