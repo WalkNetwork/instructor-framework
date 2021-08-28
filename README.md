@@ -24,14 +24,14 @@ With just one simple function, you already have several very useful features tha
 #### You can see the dokka documentation [here](https://uinnn.github.io/instructor-framework/)
 
 ### Creating a instructor.
-To create a instructor is very easy, you just call the `instructor()` function:
+To create a instructor is very easy, you just call the `command()` function:
 
 ```kt
 command(name = "mycommand", aliases = "mycmd", "cmd") {
   // adds a performer action to execute:
   performs {
     // sends a message to the console or player depending of the sender.
-    send("Hello!")
+    log("Hello!")
   }
 }
 ```
@@ -40,7 +40,7 @@ Well, this instructor thats we have created is very simple, this just performs a
 ```kt
 commandWith(name = "mycommand", aliases = "mycmd", "cmd") {
   // in this scope, everything will be performed.
-  send("Hello!")
+  log("Hello!")
 }
 ```
 
@@ -51,7 +51,7 @@ command(name = "mycommand", aliases = "mycmd", "cmd") {
   permission = "admin" // require admin permission to execute.
   permissionMessage = "§cWithout permission!" // sets the permission message.
   performs {
-    send("Hello!")
+    log("Hello!")
   }
 }
 ```
@@ -61,23 +61,23 @@ To add alternates instructors, just add a new `instructor()` or `instructorWith(
 ```kt
 command(name = "mycommand", aliases = "mycmd", "cmd") {
   performs {
-    send("Hello!")
+    log("Hello!")
   }
   
   // will be executable with: /mycommand sub
   with("sub") {
-    send("I am a sub command!")
+    log("I am a sub command!")
   }
   
   // will be executable with: /mycommand another
   sub("another") {
     performs {
-      send("Please, use: /mycommand another sub")
+      log("Please, use: /mycommand another sub")
     }
     
     // will be executable with: /mycommand another sub
     with("sub") {
-      send("I am a sub command of another sub command!")
+      log("I am a sub command of another sub command!")
     }
   }
 }
@@ -144,7 +144,7 @@ command(name = "fly") {
     // gets the argument 0 as online player or yourself.
     val target = optionalPlayer(0) or player
     target.allowFlight = true
-    send("You activated the fly of the player: ${target.name}")
+    log("You activated the fly of the player: ${target.name}")
   }
 }
 ```
@@ -152,7 +152,7 @@ command(name = "fly") {
 ```kt
 commandWith(name = "example") {
   val joined = join()
-  send("Gived arguments: $joined")
+  log("Gived arguments: $joined")
 }
 ```
 
@@ -160,7 +160,7 @@ commandWith(name = "example") {
 commandWith(name = "list") {
   // will gets the argument 0, 1 and 2 as list.
   val rangeList = list(index = 0, finalIndex = 2)
-  send("Gived arguments: $rangeList")
+  log("Gived arguments: $rangeList")
 }
 ```
 
@@ -168,7 +168,7 @@ commandWith(name = "list") {
 commandWith(name = "up") {
   val target = optionalOfflinePlayer(0) or player
   // if the target is not in the data manager, the command will be stopped.
-  val data = DataManager.get(target.uniqueId) ?: error("The target is not in the data manager.")
+  val data = DataManager.get(target.uniqueId) ?: fail("The target is not in the data manager.")
   // if the level of the target in data is not greater than 5, the command will be stopped.
   validate(data.level <= 5, "The target level is not greater than 5.")
   data.level++
@@ -177,7 +177,7 @@ commandWith(name = "up") {
 
 ```kt
 commandWith(name = "uppercase") {
-  send("Gived arguments: ${uppercase()}")
+  log("Gived arguments: ${uppercase()}")
 }
 ```
 
