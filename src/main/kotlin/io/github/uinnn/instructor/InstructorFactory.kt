@@ -3,7 +3,7 @@ package io.github.uinnn.instructor
 /**
  * Creates a new main instructor with specified name, aliases and builder action.
  */
-fun instructor(
+fun command(
   name: String,
   vararg aliases: String = emptyArray(),
   action: InstructorAction
@@ -16,7 +16,7 @@ fun instructor(
  * Creates a new main instructor with specified
  * name, aliases and action as performer of this instructor.
  */
-fun instructorWith(
+fun commandWith(
   name: String,
   vararg aliases: String = emptyArray(),
   action: Performer

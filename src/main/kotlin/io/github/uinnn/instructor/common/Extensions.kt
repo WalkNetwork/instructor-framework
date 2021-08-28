@@ -19,4 +19,4 @@ fun Command.toInstructor() = Instructor(name) {
  * Equals to:
  * `this ?: value`
  */
-infix fun <T> T.or(value: T): T = this ?: value
+infix fun <T> T?.or(value: T): T = this ?: value

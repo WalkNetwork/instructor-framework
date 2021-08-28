@@ -1,5 +1,5 @@
 plugins {
-  kotlin("jvm") version "1.5.21"
+  kotlin("jvm") version "1.5.30"
   id("java")
   id("com.github.johnrengelman.shadow") version "6.0.0"
   id("maven-publish")
@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "io.github.uinnn"
-version = "1.1"
+version = "1.2"
 
 repositories {
   mavenCentral()
@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-  compileOnly("com.single.api:spigot:1.8.9")
+  compileOnly("io.github.uinnn:minecraft-server:0.7")
   compileOnly(kotlin("stdlib-jdk8"))
 }
 
@@ -40,6 +40,9 @@ tasks {
     publications {
       create<MavenPublication>("maven") {
         from(project.components["kotlin"])
+        groupId = project.group.toString()
+        artifactId = "instructor-framework"
+        version = project.version.toString()
 
         val sourcesJar by creating(Jar::class) {
           archiveClassifier.set("sources")
@@ -54,9 +57,6 @@ tasks {
 
         setArtifacts(listOf(sourcesJar, javadocJar, jar))
 
-        groupId = "io.github.uinnn"
-        artifactId = "instructor-framework"
-        version = project.version.toString()
         pom {
           name.set("instructor-framework")
           description.set("A useful very simple way to create instructors (commands) in spigot with kotlin.")
@@ -93,7 +93,7 @@ tasks {
   }
 
   shadowJar {
-    destinationDir = file("C:\\Users\\Cliente\\Minecraft\\Local\\plugins")
+    destinationDir = file(project.property("folder")!!)
     archiveName = "${project.name}.jar"
     baseName = project.name
     version = project.version.toString()

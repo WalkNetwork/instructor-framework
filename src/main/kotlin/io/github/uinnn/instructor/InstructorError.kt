@@ -10,4 +10,4 @@ class InstructorError(message: String) : Exception(message)
 /**
  * Throws a [InstructorError] with the specified message.
  */
-fun error(message: String): Nothing = throw InstructorError(message)
+fun fail(message: String): Nothing = throw InstructorError(message)

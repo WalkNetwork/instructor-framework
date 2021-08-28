@@ -12,7 +12,7 @@ typealias InstructorAction = Instructor.() -> Unit
  */
 class Instructor(name: String) : Command(name.trim()), Instructable {
   override lateinit var performer: Performer
-  override var alternates: HashSet<Instructor> = HashSet()
+  override var alternates: MutableSet<Instructor> = HashSet()
   override var senderType: SenderType = SenderType.BOTH
 
   constructor(name: String, action: InstructorAction) : this(name) {

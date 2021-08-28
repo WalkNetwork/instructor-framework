@@ -4,6 +4,7 @@ import com.google.common.collect.FluentIterable
 import org.bukkit.*
 import org.bukkit.block.Block
 import org.bukkit.enchantments.Enchantment
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.material.MaterialData
 
@@ -34,7 +35,7 @@ interface Argumentable {
    * a [InstructorError] if the argument not exists.
    */
   fun string(index: Int, message: String = "§cArgumento de texto não reconhecido no index $index"): String =
-    optionalString(index) ?: error(message)
+    optionalString(index) ?: fail(message)
 }
 
 /**
@@ -66,7 +67,7 @@ fun Argumentable.optionalBoolean(index: Int): Boolean? = optionalString(index)?.
 fun Argumentable.boolean(
   index: Int,
   message: String = "§cArgumento true/false não reconhecido no index $index"
-): Boolean = optionalBoolean(index) ?: error(message)
+): Boolean = optionalBoolean(index) ?: fail(message)
 
 /**
  * Gets a optional byte argument at the specified index
@@ -81,7 +82,7 @@ fun Argumentable.optionalByte(index: Int): Byte? = optionalString(index)?.toByte
 fun Argumentable.byte(
   index: Int,
   message: String = "§cArgumento numérico não reconhecido no index $index"
-): Byte = optionalByte(index) ?: error(message)
+): Byte = optionalByte(index) ?: fail(message)
 
 /**
  * Gets a optional short argument at the specified index
@@ -96,7 +97,7 @@ fun Argumentable.optionalShort(index: Int): Short? = optionalString(index)?.toSh
 fun Argumentable.short(
   index: Int,
   message: String = "§cArgumento numérico não reconhecido no index $index"
-): Short = optionalShort(index) ?: error(message)
+): Short = optionalShort(index) ?: fail(message)
 
 /**
  * Gets a optional int argument at the specified index
@@ -111,7 +112,7 @@ fun Argumentable.optionalInt(index: Int): Int? = optionalString(index)?.toIntOrN
 fun Argumentable.int(
   index: Int,
   message: String = "§cArgumento numérico não reconhecido no index $index"
-): Int = optionalInt(index) ?: error(message)
+): Int = optionalInt(index) ?: fail(message)
 
 /**
  * Gets a optional long argument at the specified index
@@ -126,7 +127,7 @@ fun Argumentable.optionalLong(index: Int): Long? = optionalString(index)?.toLong
 fun Argumentable.long(
   index: Int,
   message: String = "§cArgumento numérico não reconhecido no index $index"
-): Long = optionalLong(index) ?: error(message)
+): Long = optionalLong(index) ?: fail(message)
 
 /**
  * Gets a optional float argument at the specified index
@@ -141,7 +142,7 @@ fun Argumentable.optionalFloat(index: Int): Float? = optionalString(index)?.toFl
 fun Argumentable.float(
   index: Int,
   message: String = "§cArgumento numérico não reconhecido no index $index"
-): Float = optionalFloat(index) ?: error(message)
+): Float = optionalFloat(index) ?: fail(message)
 
 /**
  * Gets a optional double argument at the specified index
@@ -156,7 +157,7 @@ fun Argumentable.optionalDouble(index: Int): Double? = optionalString(index)?.to
 fun Argumentable.double(
   index: Int,
   message: String = "§cArgumento numérico não reconhecido no index $index"
-): Double = optionalDouble(index) ?: error(message)
+): Double = optionalDouble(index) ?: fail(message)
 
 /**
  * Gets a optional online player argument at the specified index
@@ -174,7 +175,7 @@ fun Argumentable.optionalPlayer(index: Int): Player? {
 fun Argumentable.player(
   index: Int,
   message: String = "§cJogador não reconhecido no index $index"
-): Player = optionalPlayer(index) ?: error(message)
+): Player = optionalPlayer(index) ?: fail(message)
 
 /**
  * Gets a optional offline player argument at the specified index
@@ -196,7 +197,7 @@ fun Argumentable.optionalOfflinePlayer(index: Int): OfflinePlayer? {
 fun Argumentable.offlinePlayer(
   index: Int,
   message: String = "§cJogador não reconhecido no index $index"
-): OfflinePlayer = optionalOfflinePlayer(index) ?: error(message)
+): OfflinePlayer = optionalOfflinePlayer(index) ?: fail(message)
 
 /**
  * Gets a optional gamemode argument at the specified index
@@ -218,7 +219,7 @@ fun Argumentable.optionalGamemode(index: Int): GameMode? {
 fun Argumentable.gamemode(
   index: Int,
   message: String = "§cModo de jogo não reconhecido no index $index"
-): GameMode = optionalGamemode(index) ?: error(message)
+): GameMode = optionalGamemode(index) ?: fail(message)
 
 /**
  * Gets a optional enchantment argument at the specified index
@@ -240,7 +241,7 @@ fun Argumentable.optionalEnchantment(index: Int): Enchantment? {
 fun Argumentable.enchantment(
   index: Int,
   message: String = "§cEncantamento não reconhecido no index $index"
-): Enchantment = optionalEnchantment(index) ?: error(message)
+): Enchantment = optionalEnchantment(index) ?: fail(message)
 
 /**
  * Gets a optional world argument at the specified index
@@ -258,7 +259,7 @@ fun Argumentable.optionalWorld(index: Int): World? {
 fun Argumentable.world(
   index: Int,
   message: String = "§cMundo não reconhecido no index $index"
-): World = optionalWorld(index) ?: error(message)
+): World = optionalWorld(index) ?: fail(message)
 
 /**
  * Internal api to get a material by string.
@@ -287,7 +288,7 @@ fun Argumentable.optionalMaterial(index: Int): Material? {
 fun Argumentable.material(
   index: Int,
   message: String = "§cMaterial não reconhecido no index $index"
-): Material = optionalMaterial(index) ?: error(message)
+): Material = optionalMaterial(index) ?: fail(message)
 
 /**
  * Gets a optional material data argument at the specified index
@@ -307,7 +308,7 @@ fun Argumentable.optionalMaterialData(index: Int): MaterialData? {
 fun Argumentable.materialData(
   index: Int,
   message: String = "§cMaterial data não reconhecido no index $index"
-): MaterialData = optionalMaterialData(index) ?: error(message)
+): MaterialData = optionalMaterialData(index) ?: fail(message)
 
 /**
  * Gets a optional location argument at the specified index
@@ -328,7 +329,7 @@ fun Argumentable.optionalLocation(index: Int): Location? {
 fun Argumentable.location(
   index: Int,
   message: String = "§cLocalização não reconhecida no index $index"
-): Location = optionalLocation(index) ?: error(message)
+): Location = optionalLocation(index) ?: fail(message)
 
 /**
  * Gets a optional block argument at the specified index
@@ -345,7 +346,71 @@ fun Argumentable.optionalBlock(index: Int): Block? {
 fun Argumentable.block(
   index: Int,
   message: String = "§cBloco não reconhecida no index $index"
-): Block = optionalBlock(index) ?: error(message)
+): Block = optionalBlock(index) ?: fail(message)
+
+/**
+ * Gets a optional entity type argument at the specified index
+ * or null if the argument not exists.
+ */
+fun Argumentable.optionalEntityType(index: Int): EntityType? {
+  val string = optionalString(index) ?: return null
+  return runCatching {
+    EntityType.valueOf(string.uppercase())
+  }.recoverCatching {
+    EntityType.fromId(string.toInt())
+  }.getOrNull()
+}
+
+/**
+ * Gets a entity type argument at the specified index or throws
+ * a [InstructorError] if the argument not exists.
+ */
+fun Argumentable.entityType(
+  index: Int,
+  message: String = "§cTipo de entidade não reconhecida no index $index"
+): EntityType = optionalEntityType(index) ?: fail(message)
+
+/**
+ * Gets a optional sound argument at the specified index
+ * or null if the argument not exists.
+ */
+fun Argumentable.optionalSound(index: Int): Sound? {
+  val string = optionalString(index) ?: return null
+  return runCatching {
+    Sound.valueOf(string.uppercase())
+  }.getOrNull()
+}
+
+/**
+ * Gets a sound argument at the specified index or throws
+ * a [InstructorError] if the argument not exists.
+ */
+fun Argumentable.sound(
+  index: Int,
+  message: String = "§cTipo de som não reconhecido no index $index"
+): Sound = optionalSound(index) ?: fail(message)
+
+/**
+ * Gets a optional particle argument at the specified index
+ * or null if the argument not exists.
+ */
+fun Argumentable.optionalParticle(index: Int): Particle? {
+  val string = optionalString(index) ?: return null
+  return runCatching {
+    Particle.valueOf(string.uppercase())
+  }.recoverCatching {
+    Particle.values()[string.toInt()]
+  }.getOrNull()
+}
+
+/**
+ * Gets a particle argument at the specified index or throws
+ * a [InstructorError] if the argument not exists.
+ */
+fun Argumentable.particle(
+  index: Int,
+  message: String = "§cTipo de partícula não reconhecido no index $index"
+): Particle = optionalParticle(index) ?: fail(message)
 
 /**
  * Gets a optional array argument at the specified index
@@ -367,7 +432,7 @@ fun Argumentable.array(
   index: Int,
   finalIndex: Int = lastIndex,
   message: String = "§cArray não reconhecida no index $index..$finalIndex"
-): Array<out String> = optionalArray(index, finalIndex) ?: error(message)
+): Array<out String> = optionalArray(index, finalIndex) ?: fail(message)
 
 /**
  * Gets a optional list argument at the specified index
@@ -389,19 +454,19 @@ fun Argumentable.list(
   index: Int,
   finalIndex: Int = lastIndex,
   message: String = "§cLista não reconhecida no index $index..$finalIndex"
-): List<String> = optionalList(index, finalIndex) ?: error(message)
+): List<String> = optionalList(index, finalIndex) ?: fail(message)
 
 /**
- * Validates thats the [valide] parameter is true, if false, a [error] will be throw.
+ * Validates thats the [valide] parameter is true, if false, a [fail] will be throw.
  */
 fun Argumentable.validate(valide: Boolean, message: String = "§cValidação mal-sucedida."): Boolean =
-  if (valide) true else error(message)
+  if (valide) true else fail(message)
 
 /**
- * Validates thats the [valide] parameter is false, if true, a [error] will be throw.
+ * Validates thats the [valide] parameter is false, if true, a [fail] will be throw.
  */
 fun Argumentable.validateNot(valide: Boolean, message: String = "§cValidação mal-sucedida."): Boolean =
-  if (!valide) true else error(message)
+  if (!valide) true else fail(message)
 
 /**
  * Joins all arguments of this argumentable to a string.

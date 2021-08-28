@@ -27,13 +27,13 @@ interface Instructable {
   /**
    * The alternates sub commands of this instructable.
    */
-  var alternates: HashSet<Instructor>
+  var alternates: MutableSet<Instructor>
 }
 
 /**
  * Creates a alternate instructor of this instructable
  */
-fun Instructable.instructor(
+fun Instructable.sub(
   name: String,
   vararg aliases: String = emptyArray(),
   action: InstructorAction
@@ -47,7 +47,7 @@ fun Instructable.instructor(
  * Creates a alternate instructor with the specified
  * [action] as a performer of this instructable
  */
-fun Instructable.instructorWith(
+fun Instructable.with(
   name: String,
   vararg aliases: String = emptyArray(),
   action: Performer

@@ -34,6 +34,6 @@ interface InstructorPerformer : Argumentable {
 /**
  * Sends a message to the sender of this instructor performer
  */
-fun InstructorPerformer.send(message: Any) {
+fun InstructorPerformer.log(message: Any) {
   if (isPlayer) player.sendMessage("$message") else console.sendMessage("$message")
 }
