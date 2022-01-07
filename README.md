@@ -11,6 +11,8 @@
   <img align="center" src="https://img.shields.io/static/v1?style=for-the-badge&label=license&message=MIT License&color=success"/>
 </a>
 
+# This documentation is outdated.
+
 # instructor-framework
 A useful very simple way to create instructors (commands) in spigot with kotlin.
 
