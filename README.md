@@ -23,7 +23,7 @@ commandOf("fly", "voar", justPlayers = true, permission = "fly") {
 ### With arguments
 
 ```kt
-commandOf("fly", "voar", justPlayers = true, permission = "fly") {
+commandOf("example") {
   val str = string(index = 0) // string in argument 0
   val int = int(index = 1) // int in argument 1
   val double = double(index = 2) // double in argument 2
